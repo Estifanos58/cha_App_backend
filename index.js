@@ -1,17 +1,25 @@
 const express = require('express');
 const cors = require('cors');
-const cookie_parser = require('cookie-parser');
+const cookieParser = require('cookie-parser')
 const path = require('path');
-const PORT = process.env.PORT || 7500;
+const {logger, logEvent} = require('./middleware/logger.js')
 
 const app = express();
-app.use(cors);
-app.use(cookie_parser);
+const PORT = 3500;
+
+// app.use(cors);
+app.use(cookieParser());
+app.use(express.json());
+
+app.use(logger);
 
 app.get('/', (req, res)=>{
-    res.json({message: 'sucess'});
+    console.log("hi");
+    res.status(200);
+    res.json({message: "success"});
 })
 
-app.listen(PORT, ()=>{
-    console.log(`Server is running on PORT ${PORT}`);
-})
+app.listen(PORT,()=> console.log(`Server is running on port ${PORT}`));
+
+
+
