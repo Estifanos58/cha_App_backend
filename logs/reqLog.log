@@ -1,1 +1,8 @@
 20241113	19:24:57	GET	/	undefined
+20241114	07:00:05	GET	/user	undefined
+20241114	07:03:37	POST	/user	undefined
+20241114	07:06:24	POST	/user	undefined
+20241114	07:07:46	PATCH	/user	undefined
+20241114	07:13:09	PATCH	/user	undefined
+20241114	07:22:09	PATCH	/user	undefined
+20241114	07:23:21	DELETE	/user	undefined
