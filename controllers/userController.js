@@ -80,7 +80,6 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
     getAllUser,
-    createNewUser,
     updateUser,
     deleteUser
 }

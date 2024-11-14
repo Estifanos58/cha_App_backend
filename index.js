@@ -25,6 +25,7 @@ app.get('/', (req, res)=>{
 })
 
 app.use('/user', require('./routes/userRoute.js'))
+app.use('/auth', require('./routes/authRoute.js'))
 
 mongoose.connection.once('open', ()=>{
     console.log('Connnected to MongoDb');

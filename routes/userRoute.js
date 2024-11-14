@@ -4,13 +4,11 @@ const {
       getAllUser,
       updateUser,
       deleteUser,
-      createNewUser
 } = require('../controllers/userController')
 
 
 router.route('/')
       .get(getAllUser)
-      .post(createNewUser)
       .patch(updateUser)
       .delete(deleteUser)
 
