@@ -14,39 +14,6 @@ const getAllUser = async(req, res)=>{
     } 
 }
 
-const createNewUser = async(req, res)=>{
-    try{
-        const {username, email, password} = req.body;
-
-        if(!username || !email || !password) {
-           return res.status(401).json({message: "All field are required. "});
-        }
-
-        const duplicate = await User.findOne({username}).lean()
-
-        if(duplicate) {
-           return res.status(400).json({message: "name already taken"});       
-        }
-
-        const hashedPSW = await bcrypt.hash(password,10);
-
-        const userObject = {
-            email,
-            username,
-            password: hashedPSW
-        }
-
-        const user = await User.create(userObject);
-
-        if(user){
-           return res.json({message: "New User Created"});
-        }
-
-    }catch(err){
-        console.log(err);
-    }
-}
-
 const updateUser = async(req, res)=>{
     try{
         const {id, username, email, password,avatar, bio, lastSeen} = req.body;
