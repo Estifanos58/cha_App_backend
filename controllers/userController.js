@@ -14,9 +14,23 @@ const getAllUser = async(req, res)=>{
     } 
 }
 
+const getUserById = async(req, res)=>{
+    try{
+        const { id } = req.body;
+        const user = await User.find({_id:id}).exec();
+        if(!user.length){
+            res.status(404);
+           return res.json({message: "No User Found With the given Id", id: req.body.id});
+        }
+       return res.json(user);
+    } catch(err){
+        console.log(err)
+    } 
+}
+
 const updateUser = async(req, res)=>{
     try{
-        const {id, username, email, password,avatar, bio, lastSeen} = req.body;
+        const {id, username, name, email, password,avatar, bio, lastSeen} = req.body;
 
         if(!id|| !username|| !email || !password){
            return res.status(400).json({message: "All fields are required"});
@@ -35,6 +49,7 @@ const updateUser = async(req, res)=>{
         }
 
         user.username = username;
+        user.name = name;
         user.email = email;
         user.lastSeen = lastSeen || Date.now();
         if(password) {
@@ -80,6 +95,7 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
     getAllUser,
+    getUserById,
     updateUser,
     deleteUser
 }

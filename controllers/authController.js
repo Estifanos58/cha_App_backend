@@ -26,35 +26,35 @@ const SignUp = async(req, res)=>{
 
         const user = await User.create(userObject);
 
-        const accessToken = jwt.sign(
-            {
-                "UserInfo": {
-                    "username":username
-                }
-            },
-            process.env.ACCESS_TOKEN_SECRET,
-            {expiresIn: '10s'}
-        )
+        // const accessToken = jwt.sign(
+        //     {
+        //         "UserInfo": {
+        //             "username":username
+        //         }
+        //     },
+        //     process.env.ACCESS_TOKEN_SECRET,
+        //     {expiresIn: '10s'}
+        // )
     
-        const refreshToken = jwt.sign(
-            {
-                "UserInfo": {
-                    "username": username
-                }
-            },
-            process.env.REFRESH_TOKEN_SECRET,
-            {expiresIn: '20s'}
-        ) 
+        // const refreshToken = jwt.sign(
+        //     {
+        //         "UserInfo": {
+        //             "username": username
+        //         }
+        //     },
+        //     process.env.REFRESH_TOKEN_SECRET,
+        //     {expiresIn: '20s'}
+        // ) 
     
-        res.cookie('jwt', refreshToken,{
-            httpOnly: true, //accessible only by web server 
-            secure: true, //https
-            sameSite: 'None', //cross-site cookie 
-            maxAge: 7 * 24 * 60 * 60 * 1000 
-        })
+        // res.cookie('jwt', refreshToken,{
+        //     httpOnly: true, //accessible only by web server 
+        //     secure: true, //https
+        //     sameSite: 'None', //cross-site cookie 
+        //     maxAge: 7 * 24 * 60 * 60 * 1000 
+        // })
 
         if(user){
-           return res.json({message: "New User Created", accessToken});
+           return res.json({message: "New User Created", data: user});
         }
 
     }catch(err){
@@ -79,34 +79,35 @@ const login = async(req, res) =>{
             res.status(400).json({message: "Wrong password"});
         }
     
-        const accessToken = jwt.sign(
-            {
-                "UserInfo": {
-                    "username": foundUser.username
-                }
-            },
-            process.env.ACCESS_TOKEN_SECRET,
-            {expiresIn: '10s'}
-        )
+        // const accessToken = jwt.sign(
+        //     {
+        //         "UserInfo": {
+        //             "username": foundUser.username
+        //         }
+        //     },
+        //     process.env.ACCESS_TOKEN_SECRET,
+        //     {expiresIn: '10s'}
+        // )
     
-        const refreshToken = jwt.sign(
-            {
-                "UserInfo": {
-                    "username": foundUser.username
-                }
-            },
-            process.env.REFRESH_TOKEN_SECRET,
-            {expiresIn: '20s'}
-        ) 
+        // const refreshToken = jwt.sign(
+        //     {
+        //         "UserInfo": {
+        //             "username": foundUser.username
+        //         }
+        //     },
+        //     process.env.REFRESH_TOKEN_SECRET,
+        //     {expiresIn: '20s'}
+        // ) 
     
-        res.cookie('jwt', refreshToken,{
-            httpOnly: true, //accessible only by web server 
-            secure: true, //https
-            sameSite: 'None', //cross-site cookie 
-            maxAge: 7 * 24 * 60 * 60 * 1000 
-        })
+        // res.cookie('jwt', refreshToken,{
+        //     httpOnly: true, //accessible only by web server 
+        //     secure: true, //https
+        //     sameSite: 'None', //cross-site cookie 
+        //     maxAge: 7 * 24 * 60 * 60 * 1000 
+        // })
     
-        res.json({accessToken})
+        // res.json({accessToken})
+        res.json({message: "success", data: foundUser})
     }catch(err){
         console.log(err);
     }

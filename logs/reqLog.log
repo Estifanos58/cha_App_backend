@@ -9,3 +9,14 @@
 20241114	20:40:57	POST	/auth/signup	undefined
 20241114	20:43:38	POST	/auth/signup	undefined
 20241114	20:43:59	POST	/auth/signup	undefined
+20241114	20:48:25	POST	/auth/login	undefined
+20241117	18:35:18	GET	/user/all	undefined
+20241117	18:35:45	GET	/user/	undefined
+20241117	18:36:34	GET	/user/	undefined
+20241117	18:36:41	GET	/user/all	undefined
+20241117	18:37:08	GET	/user/all	undefined
+20241117	18:37:17	GET	/user	undefined
+20241117	18:38:37	GET	/user	undefined
+20241117	18:39:41	GET	/user	undefined
+20241117	18:40:57	GET	/user	undefined
+20241117	18:41:20	PATCH	/user	undefined
