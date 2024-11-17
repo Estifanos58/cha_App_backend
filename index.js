@@ -12,7 +12,7 @@ const PORT = 3500;
 
 ConnectDB();
 
-// app.use(cors);
+app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 

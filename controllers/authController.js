@@ -26,35 +26,35 @@ const SignUp = async(req, res)=>{
 
         const user = await User.create(userObject);
 
-        // const accessToken = jwt.sign(
-        //     {
-        //         "UserInfo": {
-        //             "username":username
-        //         }
-        //     },
-        //     process.env.ACCESS_TOKEN_SECRET,
-        //     {expiresIn: '10s'}
-        // )
+        const accessToken = jwt.sign(
+            {
+                "UserInfo": {
+                    "username":username
+                }
+            },
+            process.env.ACCESS_TOKEN_SECRET,
+            {expiresIn: '10s'}
+        )
     
-        // const refreshToken = jwt.sign(
-        //     {
-        //         "UserInfo": {
-        //             "username": username
-        //         }
-        //     },
-        //     process.env.REFRESH_TOKEN_SECRET,
-        //     {expiresIn: '20s'}
-        // ) 
+        const refreshToken = jwt.sign(
+            {
+                "UserInfo": {
+                    "username": username
+                }
+            },
+            process.env.REFRESH_TOKEN_SECRET,
+            {expiresIn: '20s'}
+        ) 
     
-        // res.cookie('jwt', refreshToken,{
-        //     httpOnly: true, //accessible only by web server 
-        //     secure: true, //https
-        //     sameSite: 'None', //cross-site cookie 
-        //     maxAge: 7 * 24 * 60 * 60 * 1000 
-        // })
+        res.cookie('jwt', refreshToken,{
+            httpOnly: true, //accessible only by web server 
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'None', //cross-site cookie 
+            maxAge: 7 * 24 * 60 * 60 * 1000 
+        })
 
         if(user){
-           return res.json({message: "New User Created", data: user});
+           return res.json({accessToken,message: "New User Created", data: user});
         }
 
     }catch(err){
@@ -66,48 +66,47 @@ const login = async(req, res) =>{
     try{
         const {username, password} = req.body;
         if(!username || !password) {
-            res.status(401).json({message: "All field are Required"});
+            return res.status(401).json({message: "All field are Required"});
         }
     
         const foundUser = await User.findOne({username}).exec();
         if(!foundUser){
-            res.status(400).json({message: "Username not Found"});
+           return res.status(400).json({message: "Username not Found"});
         }
     
         const match = await bcrypt.compare(password, foundUser.password);
         if(!match){
-            res.status(400).json({message: "Wrong password"});
+           return res.status(400).json({message: "Wrong password"});
         }
     
-        // const accessToken = jwt.sign(
-        //     {
-        //         "UserInfo": {
-        //             "username": foundUser.username
-        //         }
-        //     },
-        //     process.env.ACCESS_TOKEN_SECRET,
-        //     {expiresIn: '10s'}
-        // )
+         const accessToken = jwt.sign(
+             {
+                 "UserInfo": {
+                    "user": foundUser,
+                 }
+             },
+             process.env.ACCESS_TOKEN_SECRET,
+             {expiresIn: '10s'}
+         )
     
-        // const refreshToken = jwt.sign(
-        //     {
-        //         "UserInfo": {
-        //             "username": foundUser.username
-        //         }
-        //     },
-        //     process.env.REFRESH_TOKEN_SECRET,
-        //     {expiresIn: '20s'}
-        // ) 
+         const refreshToken = jwt.sign(
+             {
+                 "UserInfo": {
+                    "user": foundUser,
+                 }
+             },
+             process.env.REFRESH_TOKEN_SECRET,
+             {expiresIn: '20s'}
+         ) 
     
-        // res.cookie('jwt', refreshToken,{
-        //     httpOnly: true, //accessible only by web server 
-        //     secure: true, //https
-        //     sameSite: 'None', //cross-site cookie 
-        //     maxAge: 7 * 24 * 60 * 60 * 1000 
-        // })
+         res.cookie('jwt', refreshToken,{
+             httpOnly: true, //accessible only by web server 
+             secure: process.env.NODE_ENV === 'production',
+             sameSite: 'None', //cross-site cookie 
+             maxAge: 7 * 24 * 60 * 60 * 1000 
+         })
     
-        // res.json({accessToken})
-        res.json({message: "success", data: foundUser})
+        res.json({ accessToken, message: "success", data: foundUser})
     }catch(err){
         console.log(err);
     }
@@ -118,7 +117,7 @@ const refresh = (req, res) => {
     const cookies = req.cookies;
 
     if(!cookies?.jwt){
-        res.status(400).json({message: "Forbiden"});
+       return res.status(400).json({message: "Forbiden"});
     }
 
     const refreshToken = cookies.jwt;
@@ -134,7 +133,7 @@ const refresh = (req, res) => {
             const accessToken = jwt.sign(
                 {
                     "UserInfo":{
-                        "username": foundUser.username
+                        "user": foundUser,
                     }
                 },
                 process.env.ACCESS_TOKEN_SECRET,
