@@ -30,11 +30,11 @@ const getUserById = async(req, res)=>{
 
 const updateUser = async(req, res)=>{
     try{
-        const {id, username, name, email, password,avatar, bio, lastSeen} = req.body;
+        const {id,name ,avatar, bio} = req.body;
 
-        if(!id|| !username|| !email || !password){
-           return res.status(400).json({message: "All fields are required"});
-        }
+        // if(!id|| !username|| !email || !password){
+        //    return res.status(400).json({message: "All fields are required"});
+        // }
 
         const user = await User.findById(id).exec();
 
@@ -42,19 +42,19 @@ const updateUser = async(req, res)=>{
            return res.status(400).json({message: "No User with the Given Id is Found"});
         }
 
-        const duplicate = await User.findOne({username}).lean();
+        const duplicate = await User.findOne({name}).lean();
 
         if(duplicate && duplicate._id.toString() !== id){
             return res.status(400).json({message: "Name already taken"});
         }
 
-        user.username = username;
+        // user.username = username;
         user.name = name;
-        user.email = email;
-        user.lastSeen = lastSeen || Date.now();
-        if(password) {
-            user.password = await bcrypt.hash(password, 10);
-        }
+        // user.email = email;
+        // user.lastSeen = lastSeen || Date.now();
+        // if(password) {
+        //     user.password = await bcrypt.hash(password, 10);
+        // }
         if(avatar) {
             user.avatar = avatar;
         }

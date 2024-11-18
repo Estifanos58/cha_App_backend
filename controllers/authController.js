@@ -29,7 +29,7 @@ const SignUp = async(req, res)=>{
         const accessToken = jwt.sign(
             {
                 "UserInfo": {
-                    "username":username
+                    "user":user
                 }
             },
             process.env.ACCESS_TOKEN_SECRET,
@@ -39,7 +39,7 @@ const SignUp = async(req, res)=>{
         const refreshToken = jwt.sign(
             {
                 "UserInfo": {
-                    "username": username
+                    "user": user
                 }
             },
             process.env.REFRESH_TOKEN_SECRET,
