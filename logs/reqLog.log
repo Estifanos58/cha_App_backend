@@ -71,3 +71,11 @@
 20241118	11:43:56	POST	/user	http://localhost:5173
 20241118	11:46:09	PATCH	/user	http://localhost:5173
 20241118	11:46:16	PATCH	/user	http://localhost:5173
+20241118	13:48:11	POST	/auth/login	http://localhost:5173
+20241118	13:48:18	POST	/auth/login	http://localhost:5173
+20241118	13:48:32	POST	/auth/login	http://localhost:5173
+20241118	13:48:58	POST	/auth/login	http://localhost:5173
+20241118	13:49:21	POST	/auth/login	http://localhost:5173
+20241118	13:49:46	POST	/auth/signup	http://localhost:5173
+20241118	13:50:18	PATCH	/user	http://localhost:5173
+20241118	13:51:13	PATCH	/user	http://localhost:5173
