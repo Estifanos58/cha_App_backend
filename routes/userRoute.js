@@ -3,6 +3,7 @@ const router = express.Router();
 const {
       getAllUser,
       getUserById,
+      getUserByName,
       updateUser,
       deleteUser,
 } = require('../controllers/userController')
@@ -14,5 +15,7 @@ router.route('/')
       .delete(deleteUser)
 router.route('/all')
       .get(getAllUser)
+router.route('/find')
+      .get(getUserByName)
       
 module.exports = router

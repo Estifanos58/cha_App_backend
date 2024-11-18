@@ -28,6 +28,21 @@ const getUserById = async(req, res)=>{
     } 
 }
 
+const getUserByName = async(req,res) => {
+    try{
+        const {name} = req.body;
+        
+        const foundUser = await User.findOne({name}).lean();
+
+        if(!foundUser) {
+            return res.status(401).json({message: "User Not Found"});
+        }
+        res.json(foundUser)
+    }catch(err){
+        console.log(err.message);
+    }
+}
+
 const updateUser = async(req, res)=>{
     try{
         const {id,name ,avatar, bio} = req.body;
@@ -96,6 +111,7 @@ const deleteUser = async (req, res) => {
 module.exports = {
     getAllUser,
     getUserById,
+    getUserByName,
     updateUser,
     deleteUser
 }

@@ -64,12 +64,12 @@ const SignUp = async(req, res)=>{
 
 const login = async(req, res) =>{
     try{
-        const {username, password} = req.body;
-        if(!username || !password) {
+        const {email, password} = req.body;
+        if(!email || !password) {
             return res.status(401).json({message: "All field are Required"});
         }
     
-        const foundUser = await User.findOne({username}).exec();
+        const foundUser = await User.findOne({email}).exec();
         if(!foundUser){
            return res.status(400).json({message: "Username not Found"});
         }
